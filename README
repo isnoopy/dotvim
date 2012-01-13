@@ -1,0 +1,13 @@
+Installation
+============
+git clone https://github.com/uburoifr/dotvim ~/.vim
+
+ln -s ~/.vim/vimrc ~/.vimrc
+
+cd ~/.vim
+git submodule update --init
+
+Upgrade of all bundled plugins
+==============================
+
+git submodule foreach git pull origin master
