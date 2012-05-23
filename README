@@ -19,3 +19,13 @@ Upgrade of all bundled plugins
 ==============================
 
 git submodule foreach git pull origin master
+
+Remove a plugin
+===============
+
+To remove a submodule you need to:
+
+Delete the relevant section from the .gitmodules file.
+Delete the relevant section from .git/config.
+Run git rm --cached path_to_submodule (no trailing slash).
+Commit and delete the now untracked submodule files.
