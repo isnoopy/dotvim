@@ -22,7 +22,24 @@ set showcmd                     " show partial command
 set showmode                    " show the current mode
 set showmatch                   " Show matching bracets
 set scrolloff=5                 " keep 8 lines when scrolling
-set wildmenu                    " Make the command-line completion better
+"highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+"match OverLength /\%81v.\+/
+hi ColorColumn ctermbg=grey guibg=lightgrey
+
+" ================ Completion =======================
+
+set wildmode=list:longest
+set wildmenu                "enable ctrl-n and ctrl-p to scroll thru matches
+set wildignore=*.o,*.obj,*~ "stuff to ignore when tab completing
+set wildignore+=*vim/backups*
+set wildignore+=*sass-cache*
+set wildignore+=*DS_Store*
+set wildignore+=vendor/rails/**
+set wildignore+=vendor/cache/**
+set wildignore+=*.gem
+set wildignore+=log/**
+set wildignore+=tmp/**
+set wildignore+=*.png,*.jpg,*.gif
 
 "set wildignorecase              " make complete easiers
 
@@ -40,13 +57,18 @@ if has ("gui_running")
   set lines=100
   "set columns=171
 else
-  colorscheme darkblue
+  colorscheme molokai
 endif
 
 " redifine invisble characters colors
 highlight NonText guifg=#4a4a59
 highlight SpecialKey guifg=#4a4a59
 
+" ================ Scrolling ========================
+
+set scrolloff=8         "Start scrolling when we're 8 lines away from margins
+set sidescrolloff=15
+set sidescroll=1
 
 """"""""""""""""""""""""""""""
 " => Whitespace
@@ -85,8 +107,22 @@ vmap <S-Tab> <gv
 """"""""""""""""""""""""""""""
 
 " Store temporary files in a central spot
-set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
-set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+"set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+"set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+
+" ================ Turn Off Swap Files ==============
+
+set noswapfile
+set nobackup
+set nowb
+
+" ================ Persistent Undo ==================
+" Keep undo history across sessions, by storing in file.
+" Only works all the time.
+
+silent !mkdir ~/.vim/backups > /dev/null 2>&1
+set undodir=~/.vim/backups
+set undofile
 
 """"""""""""""""""""""""""""""
 " => REMAP
@@ -113,7 +149,18 @@ nnoremap <c-l> <c-w>l
 nmap <leader>l :set list!<CR>
 
 "" Edit the vimrc file
-nmap <silent> ,ev :e $MYVIMRC<CR>
+nmap <silent> ,ev :tabnew $MYVIMRC<CR>
+
+
+""""""""""""""""""""""""""""""
+" => FOLDS
+""""""""""""""""""""""""""""""
+
+" ================ Folds ============================
+
+set foldmethod=indent   "fold based on indent
+set foldnestmax=3       "deepest fold is 3 levels
+set nofoldenable        "dont fold by default
 
 " Space will toggle folds
 nnoremap <space> za
@@ -192,3 +239,4 @@ nmap <F2> :NERDTreeToggle<cr>
 " => GUNDO plugin
 """"""""""""""""""""""""""""""
 nmap <F5> :GundoToggle<cr>
+
